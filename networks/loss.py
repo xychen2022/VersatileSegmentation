@@ -75,9 +75,9 @@ class BalancedCELoss(nn.Module):
             unique_labels = torch.sort(torch.unique(target_i)).values
             
             if unique_labels.size(0) == 1 and unique_labels[0] == 0:
-                regularization -= self.multiplier_for_unlabeled_data * torch.mean(torch.sum(probs_i * torch.log(torch.clamp(probs_i, self.epsilon, 1-self.epsilon)), dim=1))
+                regularization -= self.multiplier_for_unlabeled_data * torch.mean(torch.sum(probs_i * torch.log(torch.clamp(probs_i, self.epsilon, 1-self.epsilon)), dim=0))
             else:
-                regularization -= torch.mean(torch.sum(probs_i * torch.log(torch.clamp(probs_i, self.epsilon, 1-self.epsilon)), dim=1))
+                regularization -= torch.mean(torch.sum(probs_i * torch.log(torch.clamp(probs_i, self.epsilon, 1-self.epsilon)), dim=0))
             
             if is_sparse[i][0] == 1:
                 cross_entropy_sparse = []
